@@ -62,6 +62,21 @@ If you want working examples without extra reading, start here:
 
 ---
 
+## ✅ First PR Success Checklist (Verify in <2 minutes)
+
+After you've installed Sentinel CI, create a test PR and verify setup with this checklist:
+
+- [ ] **Workflow file exists:** `.github/workflows/sentinel-ci.yml` is committed to your repository
+- [ ] **Config file exists:** `.sentinel-ci.yml` is in your repository root
+- [ ] **PR comment appears:** After opening a test PR, Sentinel CI posts a comment with analysis results (check PR comments within 30 seconds)
+- [ ] **No permission errors:** If you see permission errors in the PR comment, add `pull-requests: write` to your workflow permissions
+- [ ] **Results are visible:** The comment shows findings categorized by severity (if no findings, Sentinel CI is working silently—that's good!)
+- [ ] **Next step:** Review the [Troubleshooting Guide](./docs/guides/TROUBLESHOOTING.md) if anything looks unexpected
+
+**If all checks pass:** Your Sentinel CI setup is complete. You can now refine your config with the [Rule Engine Guide](./docs/reference/RULE_ENGINE.md). 🎉
+
+---
+
 ## 📖 Explore the Documentation
 
 | Document | Description |
