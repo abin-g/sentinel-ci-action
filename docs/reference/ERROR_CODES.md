@@ -32,9 +32,9 @@ Sentinel CI categorizes issues based on their impact and the confidence of the d
 
 | Category | What we check for | Tools Used |
 |----------|-------------------|------------|
-| **Security** | Injection, hardcoded secrets, unsafe API usage, broken auth. | Semgrep & AI Engine |
-| **Quality** | Cognitive complexity, deep nesting, dead code, long functions. | Coming Soon |
-| **Practices** | Naming styles, folder structure, forbidden imports. | Coming Soon |
+| **Security** | Injection, hardcoded secrets, unsafe API usage, broken auth. | Semgrep, optional CodeQL, and AI Engine |
+| **Quality** | Cognitive complexity, deep nesting, dead code, long functions. | Semgrep quality packs and optional CodeQL quality mode |
+| **Practices** | Naming styles, folder structure, forbidden imports. | Standards engine and AI practice review |
 
 ---
 
@@ -51,6 +51,15 @@ AI is used to explain and filter findings. If you believe a finding is incorrect
 
 ### 3. "GitHub Action failed with exit code 1"
 This is expected behavior when **ERROR** level findings are detected (or **WARNING**, if you enabled strict blocking). Review the PR comment from the bot, apply the suggested fixes, and push an update to clear the check.
+
+### 4. "Unknown policy pack"
+This indicates invalid policy-as-code preset configuration. Check the selected pack names under `policy.packs` and confirm all parent names in `extends` are valid.
+
+### 5. "Circular policy pack inheritance detected"
+This means one or more custom policy packs reference each other recursively. Break the cycle by introducing a single parent chain or flattening the pack structure.
+
+### 6. "No supported languages detected for CodeQL analysis"
+Your repository may not contain a supported language, or auto-detection may not match your layout. Set `codeql.languages` or workflow input `codeql_languages` explicitly.
 
 ---
 

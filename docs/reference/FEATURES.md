@@ -24,6 +24,22 @@ If you configure multiple AI providers, the system will automatically handle fai
 ### 6. Local-First Security Scanning
 We use **Semgrep** to perform initial scans directly on your CI/CD runner. Your raw source code is not uploaded to our servers—only the specific flagged snippets are sent to your chosen AI provider for analysis.
 
+### 7. Deep Vulnerability Analysis with CodeQL
+Sentinel CI can optionally run **CodeQL** for supported languages, then merge those results into the same reporting pipeline as Semgrep findings. This is useful for higher-confidence security review on protected branches and sensitive repositories.
+
+See [docs/features/vulnerability-scanner-improvements.md](../features/vulnerability-scanner-improvements.md).
+
+### 8. Policy-as-Code Presets
+Sentinel CI is adding reusable policy packs so organizations can define governance baselines once and roll them out across many repositories.
+
+This includes:
+- built-in baseline packs
+- custom `policy_packs`
+- `extends` inheritance
+- per-repo top-level overrides
+
+See [docs/features/policy-as-code-presets.md](../features/policy-as-code-presets.md).
+
 ---
 
 ## 🧪 How to Enable & Test AI Feedback
@@ -70,6 +86,7 @@ Open a Pull Request. If the AI is configured correctly, your PR report will now 
 | Feature | Static Mode (Default) | AI Enhanced Mode |
 |---------|-----------------------|------------------|
 | Security Scan | ✅ Yes | ✅ Yes |
+| Deep CodeQL Analysis | Optional | Optional |
 | Risk Score | ✅ Yes | ✅ Yes (More Accurate) |
 | Fix Suggestions | 💠 Generic | 🧠 Context-Aware |
 | Explanation | 💠 Rule-based | 🧠 Expert Analysis |

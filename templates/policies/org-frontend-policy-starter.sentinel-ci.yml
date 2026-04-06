@@ -1,0 +1,66 @@
+# Starter organization policy template for frontend and web repositories.
+# Copy into a target repository as `.sentinel-ci.yml` and customize for your org.
+
+policy_packs:
+  org-frontend-platform-v1:
+    extends: [owasp-web, soc2]
+    config:
+      security:
+        enabled: true
+        block_on_severity: [ERROR]
+      quality:
+        enabled: true
+        block_on_severity: []
+      codeql:
+        enabled: true
+        mode: security
+        languages: [javascript, typescript]
+      hooks:
+        pre_push:
+          enabled: true
+          block_on_severity: [ERROR]
+      practices:
+        enabled: true
+        review_files: true
+        max_files: 30
+        file_extensions: [".js", ".jsx", ".ts", ".tsx"]
+        guidelines:
+          - "Never trust client input; validate on server or API boundaries."
+          - "Avoid dangerous DOM APIs with untrusted HTML."
+          - "Do not expose secrets in frontend bundles or environment files."
+
+  team-web-react-v1:
+    extends: [org-frontend-platform-v1]
+    config:
+      standards:
+        naming:
+          - rule: "React component PascalCase"
+            pattern: "^[A-Z][A-Za-z0-9]*\\.(tsx|jsx)$"
+            in_dirs: ["src/components", "src/pages"]
+            file_extensions: [".tsx", ".jsx"]
+            message: "React component files should be PascalCase."
+      practices:
+        guidelines:
+          - "Prefer typed props and avoid any in public component APIs."
+          - "Use centralized service modules for API access."
+
+  team-web-public-v1:
+    extends: [team-web-react-v1]
+    config:
+      security:
+        block_on_severity: [ERROR, WARNING]
+      hooks:
+        pre_push:
+          block_on_severity: [ERROR, WARNING]
+      practices:
+        guidelines:
+          - "Avoid localStorage for sensitive tokens when stronger session patterns are available."
+
+policy:
+  packs:
+    - team-web-react-v1
+
+exclude:
+  - "dist/"
+  - "coverage/"
+  - "storybook-static/"

@@ -1,0 +1,62 @@
+# Starter organization policy template for backend and service repositories.
+# Copy into a target repository as `.sentinel-ci.yml` and customize for your org.
+
+policy_packs:
+  org-platform-v1:
+    extends: [owasp-web, soc2]
+    config:
+      security:
+        enabled: true
+        block_on_severity: [ERROR]
+      quality:
+        enabled: true
+        block_on_severity: []
+      codeql:
+        enabled: true
+        mode: security
+      hooks:
+        pre_push:
+          enabled: true
+          block_on_severity: [ERROR]
+      practices:
+        enabled: true
+        review_files: true
+        max_files: 25
+        guidelines:
+          - "Validate and sanitize all external input at service boundaries."
+          - "Never hardcode secrets or credentials in source code."
+          - "Use parameterized queries for all DB access."
+
+  team-backend-v1:
+    extends: [org-platform-v1, internal-python-layered]
+    config:
+      standards:
+        naming:
+          - rule: "Python module snake_case"
+            pattern: "^[a-z0-9_]+\\.py$"
+            in_dirs: ["app", "scanner", "tests"]
+            file_extensions: [".py"]
+            message: "Python files must use snake_case naming."
+      practices:
+        guidelines:
+          - "Controllers should not directly access data repositories."
+
+  team-payments-v1:
+    extends: [team-backend-v1, pci]
+    config:
+      security:
+        block_on_severity: [ERROR, WARNING]
+      hooks:
+        pre_push:
+          block_on_severity: [ERROR, WARNING]
+      practices:
+        guidelines:
+          - "Do not log PAN/PII or any payment-sensitive data."
+
+policy:
+  packs:
+    - team-backend-v1
+
+exclude:
+  - "tests/fixtures/"
+  - "generated/"

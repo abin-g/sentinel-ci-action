@@ -10,16 +10,21 @@ This document explains how to configure `.sentinel-ci.yml` (AI Code Guardian eng
 
 Sentinel CI supports four policy layers:
 
+Preview: upcoming releases extend this with reusable policy packs and inheritance.
+
 1. `security`  
    Controls merge-blocking behavior by severity (`ERROR`, `WARNING`, `INFO`).
 
 2. `quality`  
    Enables additional Semgrep quality rulesets (`p/ci`, `p/default`) on top of baseline scanning.
 
-3. `standards`  
+3. `codeql`
+  Enables deep CodeQL analysis for supported languages.
+
+4. `standards`  
    Deterministic (non-AI) checks for imports, naming patterns, and required structure.
 
-4. `practices`  
+5. `practices`  
    AI-driven review using your plain-English engineering guidelines.
 
 ---
@@ -37,6 +42,13 @@ security:
 quality:
   enabled: true
   block_on_severity: []
+
+codeql:
+  enabled: false
+  mode: security
+  languages: []
+  block_on_severity:
+    - ERROR
 
 practices:
   enabled: true
@@ -132,6 +144,26 @@ practices:
 
 ---
 
+### `codeql`
+
+```yaml
+codeql:
+  enabled: true
+  mode: security
+  languages: [python, javascript]
+  block_on_severity:
+    - ERROR
+```
+
+- `enabled`: turn deep CodeQL analysis on/off.
+- `mode`: `security` or `quality`.
+- `languages`: explicit language list. If empty, Sentinel CI auto-detects supported languages.
+- `block_on_severity`: severities from CodeQL findings that should fail CI.
+
+For setup and examples, see [docs/features/vulnerability-scanner-improvements.md](../features/vulnerability-scanner-improvements.md).
+
+---
+
 ### `standards` (Deterministic Rules)
 
 These checks are regex/path based and do not require AI.
@@ -191,6 +223,24 @@ standards:
       message: "Domain layer folder must exist."
 ```
 
+### 4) Policy-as-Code Presets (Preview)
+
+Upcoming releases support reusable policy packs and inheritance:
+
+```yaml
+policy_packs:
+  org-platform-v1:
+    extends: [owasp-web, soc2]
+    config:
+      security:
+        block_on_severity: [ERROR]
+
+policy:
+  packs: [org-platform-v1]
+```
+
+See [docs/features/policy-as-code-presets.md](../features/policy-as-code-presets.md).
+
 ---
 
 ## Troubleshooting
@@ -217,6 +267,23 @@ Check:
 1. Policy file is `.sentinel-ci.yml` at repository root (or legacy `.ai-guardian.yml` only if the new file is absent).
 2. YAML indentation is valid.
 3. Exclude paths are correct for your project layout.
+
+### CodeQL did not run
+
+Check:
+
+1. `codeql.enabled` is true or workflow input `enable_codeql` is enabled.
+2. `languages` is valid or the repo contains a supported language.
+3. Your workflow timeout is high enough for CodeQL database creation.
+
+### Policy pack configuration fails (Preview)
+
+Check:
+
+1. All selected pack names exist.
+2. `extends` references valid parent packs.
+3. There is no circular inheritance chain.
+4. Top-level overrides are not masking inherited behavior unexpectedly.
 
 ---
 

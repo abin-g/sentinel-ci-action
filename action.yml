@@ -19,6 +19,14 @@ inputs:
     description: "Fail the action if critical security issues are found"
     required: false
     default: "true"
+  enable_codeql:
+    description: "Enable CodeQL deep vulnerability analysis"
+    required: false
+    default: "false"
+  codeql_languages:
+    description: "Comma-separated list of languages for CodeQL (auto-detect if empty)"
+    required: false
+    default: ""
 
 runs:
   using: "composite"
@@ -42,6 +50,8 @@ runs:
           -v ${{ github.workspace }}:${{ github.workspace }} \
           -e GITHUB_WORKSPACE=${{ github.workspace }} \
           -e INPUT_SCAN_PATH=${{ inputs.scan_path }} \
+          -e INPUT_ENABLE_CODEQL=${{ inputs.enable_codeql }} \
+          -e INPUT_CODEQL_LANGUAGES=${{ inputs.codeql_languages }} \
           -e INPUT_STEP="scan" \
           -e INPUT_STATE_FILE="${{ github.workspace }}/.sentinel_ci_state.json" \
           -e TELEMETRY_KEY=${{ env.TELEMETRY_KEY }} \

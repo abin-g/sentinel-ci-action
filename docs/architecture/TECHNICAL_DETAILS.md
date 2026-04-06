@@ -7,16 +7,18 @@
 The platform follows a **"Static-Analysis First, AI-Refined"** methodology. This ensures that every finding is grounded in real code patterns before the AI provides context.
 
 ### 1. The Scanning Layer (Industrial Standards)
-We leverage **Semgrep**, the industry standard for lightweight static analysis. 
+We leverage **Semgrep** as the baseline scanner and add **optional CodeQL** for deeper vulnerability analysis on supported languages.
 - **Standards**: Our rulesets are mapped directly to **OWASP Top 10** and **CWE (Common Weakness Enumeration)**.
 - **Rulesets**:
     - `p/security-audit`: Deep security checks for vulnerabilities.
     - `p/secrets`: Detection of hardcoded keys and tokens.
     - `p/ci` & `p/default`: Industry-standard code quality and maintainability rules.
+    - CodeQL security and code-scanning suites for deeper analysis when enabled.
 
 ### 2. The Context Discovery Layer
 Before any analysis, the platform builds a "Project Identity":
 - **Architectural Enforcement**: Define both plain-English guidelines (AI) and strict "Hard Laws" (Deterministic).
+- **Policy-as-Code Direction**: Upcoming releases add reusable pack-based policies for multi-repo rollout.
 - **Hard Laws**: Block forbidden imports, enforce naming patterns, and verify repo structure.
 - **Clean Code Insights**: Automatically detects code smells and complexity.
 - **Tech Stack Detection**: Automatically identifies if the project is Python, Node.js, etc.
