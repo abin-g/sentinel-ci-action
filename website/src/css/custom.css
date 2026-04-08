@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap');
+
+:root {
+  --ifm-color-primary: #0d5f56;
+  --ifm-color-primary-dark: #0b564d;
+  --ifm-color-primary-darker: #0b5148;
+  --ifm-color-primary-darkest: #094239;
+  --ifm-color-primary-light: #0f685f;
+  --ifm-color-primary-lighter: #116f66;
+  --ifm-color-primary-lightest: #14877b;
+  --ifm-background-color: #fbfcf8;
+  --ifm-font-color-base: #1f312d;
+  --ifm-heading-color: #0e1c19;
+  --ifm-font-family-base: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --ifm-font-family-monospace: 'IBM Plex Mono', 'SFMono-Regular', monospace;
+  --ifm-code-font-size: 95%;
+  --ifm-navbar-background-color: rgba(251, 252, 248, 0.9);
+  --ifm-footer-background-color: #09221d;
+  --docusaurus-highlighted-code-line-bg: rgba(13, 95, 86, 0.08);
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #6ce1c6;
+  --ifm-color-primary-dark: #53dbc0;
+  --ifm-color-primary-darker: #46d8bc;
+  --ifm-color-primary-darkest: #2ac3a6;
+  --ifm-color-primary-light: #85e7cc;
+  --ifm-color-primary-lighter: #92ead0;
+  --ifm-color-primary-lightest: #b8f2df;
+  --ifm-background-color: #0b1412;
+  --ifm-navbar-background-color: rgba(11, 20, 18, 0.92);
+  --ifm-footer-background-color: #07100f;
+  --ifm-font-color-base: #e5f4ee;
+  --ifm-heading-color: #f5fffb;
+  --docusaurus-highlighted-code-line-bg: rgba(108, 225, 198, 0.14);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--ifm-background-color);
+}
+
+.navbar {
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(13, 95, 86, 0.08);
+}
+
+.footer {
+  color: #d4e8e1;
+}
+
+.theme-code-block,
+pre {
+  border-radius: 18px;
+}
+
+.pagination-nav__link {
+  border-radius: 18px;
+}

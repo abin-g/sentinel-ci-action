@@ -1,0 +1,9 @@
+{
+  "label": "Legal",
+  "position": 7,
+  "link": {
+    "type": "generated-index",
+    "title": "Legal",
+    "description": "License and legal material for the project."
+  }
+}

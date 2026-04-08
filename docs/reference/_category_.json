@@ -1,0 +1,9 @@
+{
+  "label": "Reference",
+  "position": 5,
+  "link": {
+    "type": "generated-index",
+    "title": "Reference",
+    "description": "Detailed behavior, configuration, and error references."
+  }
+}

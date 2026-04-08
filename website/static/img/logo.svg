@@ -1,0 +1,14 @@
+<svg width="256" height="256" viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc">
+	<title id="title">Sentinel CI</title>
+	<desc id="desc">Shield logo for Sentinel CI.</desc>
+	<defs>
+		<linearGradient id="shieldFill" x1="0%" y1="0%" x2="100%" y2="100%">
+			<stop offset="0%" stop-color="#0d5f56" />
+			<stop offset="100%" stop-color="#14877b" />
+		</linearGradient>
+	</defs>
+	<rect width="256" height="256" rx="56" fill="#f4f8f6" />
+	<path d="M128 30 198 56v63c0 52-27.27 89.8-70 107-42.73-17.2-70-55-70-107V56l70-26Z" fill="url(#shieldFill)" />
+	<path d="M128 57.5 175 75v43.9c0 39-19.85 67.92-47 81.8-27.15-13.88-47-42.8-47-81.8V75l47-17.5Z" fill="#0a201c" opacity="0.18" />
+	<path d="M87 129.5 111.5 154 169 96.5" fill="none" stroke="#ecfff9" stroke-linecap="round" stroke-linejoin="round" stroke-width="18" />
+</svg>

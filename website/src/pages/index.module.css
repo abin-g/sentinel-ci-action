@@ -1,0 +1,218 @@
+.heroBanner {
+  background:
+    radial-gradient(circle at top left, rgba(17, 163, 163, 0.2), transparent 28%),
+    radial-gradient(circle at bottom right, rgba(255, 184, 77, 0.22), transparent 34%),
+    linear-gradient(135deg, #f4f8f6 0%, #eef4ef 50%, #f9f5eb 100%);
+  padding: 5rem 0 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.heroGrid {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(280px, 0.8fr);
+  align-items: center;
+}
+
+.heroCopy {
+  max-width: 40rem;
+}
+
+.eyebrow,
+.sectionLabel {
+  color: #0d5f56;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+
+.heroTitle {
+  color: #0e1c19;
+  font-size: clamp(3rem, 8vw, 5.4rem);
+  letter-spacing: -0.05em;
+  line-height: 0.95;
+  margin-bottom: 1rem;
+}
+
+.heroSubtitle {
+  color: #12342f;
+  font-size: clamp(1.15rem, 2.3vw, 1.5rem);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.heroDescription {
+  color: #32504a;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 1.75rem;
+}
+
+.heroActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.9rem;
+}
+
+.heroPanel {
+  background: rgba(11, 36, 31, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(10, 22, 19, 0.18);
+  color: #ebfff7;
+  padding: 1.2rem;
+}
+
+.panelHeader {
+  color: #89f0d9;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin-bottom: 0.9rem;
+  text-transform: uppercase;
+}
+
+.codePanel {
+  background: #071411;
+  border-radius: 18px;
+  color: #d4ffe5;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.panelMeta {
+  color: #b8d7cd;
+  line-height: 1.6;
+  margin-top: 1rem;
+}
+
+.section {
+  padding: 4.5rem 0;
+}
+
+.sectionAlt {
+  background: linear-gradient(180deg, rgba(250, 246, 238, 0.9), rgba(244, 248, 246, 0.92));
+}
+
+.sectionHeading {
+  margin-bottom: 2rem;
+  max-width: 42rem;
+}
+
+.sectionHeading h2,
+.installTitle {
+  color: #0e1c19;
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.cardGrid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.infoCard,
+.docCard,
+.inlineCard {
+  background: #ffffff;
+  border: 1px solid rgba(10, 43, 37, 0.08);
+  border-radius: 22px;
+  box-shadow: 0 12px 36px rgba(14, 28, 25, 0.06);
+}
+
+.infoCard {
+  padding: 1.5rem;
+}
+
+.infoCard h3,
+.docCardTitle {
+  color: #0e1c19;
+  display: block;
+  font-size: 1.15rem;
+  margin-bottom: 0.7rem;
+}
+
+.infoCard p,
+.docCardText,
+.inlineCard span {
+  color: #44625c;
+  line-height: 1.65;
+}
+
+.docCard,
+.inlineCard {
+  color: inherit;
+  display: block;
+  padding: 1.5rem;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.docCard:hover,
+.docCard:focus,
+.inlineCard:hover,
+.inlineCard:focus {
+  border-color: rgba(13, 95, 86, 0.28);
+  box-shadow: 0 18px 42px rgba(14, 28, 25, 0.1);
+  text-decoration: none;
+  transform: translateY(-2px);
+}
+
+.installLayout {
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.9fr);
+}
+
+.stepList {
+  color: #32504a;
+  line-height: 1.9;
+  margin: 1.25rem 0 0;
+  padding-left: 1.2rem;
+}
+
+.installLinks {
+  display: grid;
+  gap: 1rem;
+}
+
+.inlineCard strong {
+  color: #0e1c19;
+  display: block;
+  margin-bottom: 0.45rem;
+}
+
+@media screen and (max-width: 996px) {
+  .heroBanner {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .heroGrid,
+  .installLayout,
+  .cardGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .heroTitle {
+    font-size: clamp(2.6rem, 16vw, 4.2rem);
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .heroActions {
+    flex-direction: column;
+  }
+
+  .heroActions :global(.button) {
+    width: 100%;
+  }
+}
