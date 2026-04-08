@@ -27,6 +27,14 @@ inputs:
     description: "Comma-separated list of languages for CodeQL (auto-detect if empty)"
     required: false
     default: ""
+  enable_diff_aware:
+    description: "Analyze changed files first for pull requests (fallbacks to full scan if unresolved)"
+    required: false
+    default: "true"
+  enable_dependency_scan:
+    description: "Enable dependency vulnerability scanning (pip-audit)"
+    required: false
+    default: "false"
 
 runs:
   using: "composite"
@@ -49,9 +57,12 @@ runs:
         docker run --rm \
           -v ${{ github.workspace }}:${{ github.workspace }} \
           -e GITHUB_WORKSPACE=${{ github.workspace }} \
+          -e GITHUB_EVENT_PATH=${{ github.event_path }} \
           -e INPUT_SCAN_PATH=${{ inputs.scan_path }} \
           -e INPUT_ENABLE_CODEQL=${{ inputs.enable_codeql }} \
           -e INPUT_CODEQL_LANGUAGES=${{ inputs.codeql_languages }} \
+          -e INPUT_ENABLE_DIFF_AWARE=${{ inputs.enable_diff_aware }} \
+          -e INPUT_ENABLE_DEPENDENCY_SCAN=${{ inputs.enable_dependency_scan }} \
           -e INPUT_STEP="scan" \
           -e INPUT_STATE_FILE="${{ github.workspace }}/.sentinel_ci_state.json" \
           -e TELEMETRY_KEY=${{ env.TELEMETRY_KEY }} \

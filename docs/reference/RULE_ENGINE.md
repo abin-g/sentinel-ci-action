@@ -18,14 +18,20 @@ Preview: upcoming releases extend this with reusable policy packs and inheritanc
 2. `quality`  
    Enables additional Semgrep quality rulesets (`p/ci`, `p/default`) on top of baseline scanning.
 
-3. `codeql`
+3. `scan`
+  Controls scan strategy including diff-aware changed-files-first behavior.
+
+4. `codeql`
   Enables deep CodeQL analysis for supported languages.
 
-4. `standards`  
+5. `standards`  
    Deterministic (non-AI) checks for imports, naming patterns, and required structure.
 
-5. `practices`  
+6. `practices`  
    AI-driven review using your plain-English engineering guidelines.
+
+7. `dependency_scan`
+  Detects vulnerable dependencies from `requirements*.txt` using pip-audit.
 
 ---
 
@@ -42,6 +48,17 @@ security:
 quality:
   enabled: true
   block_on_severity: []
+
+scan:
+  diff_aware:
+    enabled: true
+    fallback_full_scan: true
+
+dependency_scan:
+  enabled: false
+  default_severity: WARNING
+  block_on_severity:
+    - ERROR
 
 codeql:
   enabled: false
@@ -164,6 +181,22 @@ For setup and examples, see [docs/features/vulnerability-scanner-improvements.md
 
 ---
 
+### `scan.diff_aware`
+
+```yaml
+scan:
+  diff_aware:
+    enabled: true
+    fallback_full_scan: true
+```
+
+- `enabled`: enables changed-files-first scanning for pull requests.
+- `fallback_full_scan`: if changed files cannot be resolved, run full scan when true.
+
+For full behavior and rollout guidance, see [docs/features/diff-aware-scanning.md](../features/diff-aware-scanning.md).
+
+---
+
 ### `standards` (Deterministic Rules)
 
 These checks are regex/path based and do not require AI.
@@ -185,6 +218,23 @@ These checks are regex/path based and do not require AI.
   - `path`: required path in repository
   - `required`: true/false
   - `message`: violation message
+
+---
+
+### `dependency_scan`
+
+```yaml
+dependency_scan:
+  enabled: true
+  default_severity: WARNING
+  block_on_severity: [ERROR]
+```
+
+- `enabled`: turn dependency vulnerability scanning on/off.
+- `default_severity`: severity assigned to dependency findings.
+- `block_on_severity`: severities from dependency findings that should fail CI.
+
+Details: [docs/features/dependency-vulnerability-scanning.md](../features/dependency-vulnerability-scanning.md).
 
 ---
 
@@ -275,6 +325,14 @@ Check:
 1. `codeql.enabled` is true or workflow input `enable_codeql` is enabled.
 2. `languages` is valid or the repo contains a supported language.
 3. Your workflow timeout is high enough for CodeQL database creation.
+
+### Diff-aware scan did not apply
+
+Check:
+
+1. `enable_diff_aware` action input is true or `scan.diff_aware.enabled` is true.
+2. Workflow runs on pull request events.
+3. Diff context is available and repository history is sufficient.
 
 ### Policy pack configuration fails (Preview)
 

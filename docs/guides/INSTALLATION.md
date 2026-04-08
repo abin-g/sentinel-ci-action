@@ -127,6 +127,8 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           enable_codeql: "true"
           codeql_languages: "python,javascript"
+          enable_diff_aware: "true"
+          enable_dependency_scan: "true"
 ```
 
 Expected result after first PR run:
@@ -193,6 +195,17 @@ codeql:
   block_on_severity:
     - ERROR
     - WARNING
+
+scan:
+  diff_aware:
+    enabled: true
+    fallback_full_scan: true
+
+dependency_scan:
+  enabled: true
+  default_severity: WARNING
+  block_on_severity:
+    - ERROR
 
 practices:
   enabled: true
@@ -262,5 +275,7 @@ You are fully installed when all of these are true:
 - Rule configuration: [RULE_ENGINE.md](../reference/RULE_ENGINE.md)
 - Full benefits and advantages: [docs/features/advantages-of-sentinel-ci.md](../features/advantages-of-sentinel-ci.md)
 - Scanner improvements: [docs/features/vulnerability-scanner-improvements.md](../features/vulnerability-scanner-improvements.md)
+- Diff-aware scanning: [docs/features/diff-aware-scanning.md](../features/diff-aware-scanning.md)
+- Dependency vulnerability scanning: [docs/features/dependency-vulnerability-scanning.md](../features/dependency-vulnerability-scanning.md)
 - Policy presets: [docs/features/policy-as-code-presets.md](../features/policy-as-code-presets.md)
 - Troubleshooting: [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)

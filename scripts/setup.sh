@@ -87,6 +87,12 @@ ENABLE_PRACTICES=${ENABLE_PRACTICES:-Y}
 read -p "🔬 Enable CodeQL deep vulnerability scanning? (Y/n): " ENABLE_CODEQL
 ENABLE_CODEQL=${ENABLE_CODEQL:-Y}
 
+read -p "⚡ Enable diff-aware PR scanning (changed files first)? (Y/n): " ENABLE_DIFF_AWARE
+ENABLE_DIFF_AWARE=${ENABLE_DIFF_AWARE:-Y}
+
+read -p "📦 Enable dependency vulnerability scanning? (Y/n): " ENABLE_DEP_SCAN
+ENABLE_DEP_SCAN=${ENABLE_DEP_SCAN:-Y}
+
 read -p "🧠 Review individual source files for AI practices? (Y/n): " REVIEW_FILES
 REVIEW_FILES=${REVIEW_FILES:-Y}
 
@@ -106,6 +112,8 @@ if [[ "$MAX_PROTECTION" =~ ^[Yy]$ ]]; then
   ENABLE_QUALITY="Y"
   ENABLE_PRACTICES="Y"
   ENABLE_CODEQL="Y"
+  ENABLE_DIFF_AWARE="Y"
+  ENABLE_DEP_SCAN="Y"
   REVIEW_FILES="Y"
 fi
 
@@ -123,6 +131,8 @@ if [[ "$ENABLE_SECURITY" =~ ^[Yy]$ ]]; then CFG_SEC="true"; else CFG_SEC="false"
 if [[ "$ENABLE_QUALITY" =~ ^[Yy]$ ]]; then CFG_QUAL="true"; else CFG_QUAL="false"; fi
 if [[ "$ENABLE_PRACTICES" =~ ^[Yy]$ ]]; then CFG_PRAC="true"; else CFG_PRAC="false"; fi
 if [[ "$ENABLE_CODEQL" =~ ^[Yy]$ ]]; then CFG_CODEQL="true"; ACTION_CODEQL="\"true\""; else CFG_CODEQL="false"; ACTION_CODEQL="\"false\""; fi
+if [[ "$ENABLE_DIFF_AWARE" =~ ^[Yy]$ ]]; then CFG_DIFF_AWARE="true"; ACTION_DIFF_AWARE="\"true\""; else CFG_DIFF_AWARE="false"; ACTION_DIFF_AWARE="\"false\""; fi
+if [[ "$ENABLE_DEP_SCAN" =~ ^[Yy]$ ]]; then CFG_DEP_SCAN="true"; ACTION_DEP_SCAN="\"true\""; else CFG_DEP_SCAN="false"; ACTION_DEP_SCAN="\"false\""; fi
 if [[ "$REVIEW_FILES" =~ ^[Yy]$ ]]; then CFG_REVIEW_FILES="true"; else CFG_REVIEW_FILES="false"; fi
 
 CODEQL_LANG_BLOCK=""
@@ -310,6 +320,17 @@ codeql:
 ${CODEQL_LANG_BLOCK}  block_on_severity:
 ${BLOCK_ON_SEVERITY}
 
+scan:
+  diff_aware:
+    enabled: ${CFG_DIFF_AWARE}
+    fallback_full_scan: true
+
+dependency_scan:
+  enabled: ${CFG_DEP_SCAN}
+  default_severity: WARNING
+  block_on_severity:
+${BLOCK_ON_SEVERITY}
+
 practices:
   enabled: ${CFG_PRAC}
   review_files: ${CFG_REVIEW_FILES}
@@ -373,6 +394,8 @@ jobs:
           block_on_findings: ${ACTION_BLOCK}
           enable_codeql: ${ACTION_CODEQL}
           codeql_languages: ${ACTION_CODEQL_LANGUAGES}
+          enable_diff_aware: ${ACTION_DIFF_AWARE}
+          enable_dependency_scan: ${ACTION_DEP_SCAN}
 EOF
 
 echo ""

@@ -15,6 +15,7 @@ In the era of AI-generated code, security vulnerabilities and architectural drif
 - **Actionable Insights:** It does not just say "Error found"—it explains *why* it is a risk and *how* to fix it.
 - **Multi-Agent AI**: Supports OpenAI, Anthropic, and Gemini with auto-failover.
 - **Deep Vulnerability Analysis**: Supports optional CodeQL-based deep scanning for supported languages.
+- **Dependency Risk Detection**: Finds vulnerable third-party packages from dependency manifests.
 - **Security Guardrails**: Maps findings to OWASP & CWE standards.
 - **Policy-as-Code Presets (Preview)**: Upcoming reusable governance baselines and starter templates for multi-repo rollout.
 - **Architectural Enforcement**: Define your own "Project Laws" in plain English.
@@ -29,6 +30,7 @@ In the era of AI-generated code, security vulnerabilities and architectural drif
 - **Better developer guidance:** Findings include fix-focused explanations.
 - **Flexible governance:** Enforce org standards with policy-as-code presets.
 - **Scalable security:** Combine lightweight checks with deeper optional CodeQL scans.
+- **Faster PR scans:** Diff-aware scanning prioritizes changed files to reduce latency.
 
 See full details here: [Advantages of Sentinel CI](./docs/features/advantages-of-sentinel-ci.md)
 
@@ -87,6 +89,8 @@ After you've installed Sentinel CI, create a test PR and verify setup with this 
 | [**Advantages of Sentinel CI**](./docs/features/advantages-of-sentinel-ci.md) | Detailed breakdown of business and engineering benefits. |
 | [**Rule Engine Guide**](./docs/reference/RULE_ENGINE.md) | In-depth `.sentinel-ci.yml` reference, schema, policies, and troubleshooting. |
 | [**Feature & AI Guide**](./docs/reference/FEATURES.md) | AI agents and how to test/enable them. |
+| [**Diff-Aware Scanning**](./docs/features/diff-aware-scanning.md) | Changed-files-first scanning, config, and troubleshooting. |
+| [**Dependency Vulnerability Scanning**](./docs/features/dependency-vulnerability-scanning.md) | Dependency CVE scanning with pip-audit, policy, and troubleshooting. |
 | [**Vulnerability Scanner Improvements**](./docs/features/vulnerability-scanner-improvements.md) | CodeQL setup, inputs, supported languages, and troubleshooting. |
 | [**Policy-as-Code Presets (Preview)**](./docs/features/policy-as-code-presets.md) | Planned reusable policy packs, inheritance, and rollout templates. |
 | [**Error & Analysis Reference**](./docs/reference/ERROR_CODES.md) | Findings, severity levels, and troubleshooting. |
@@ -99,6 +103,8 @@ After you've installed Sentinel CI, create a test PR and verify setup with this 
 | Core Semgrep security scanning | Available |
 | AI provider failover | Available |
 | Optional CodeQL deep scanning | Available |
+| Diff-aware changed-files scanning | Available |
+| Dependency vulnerability scanning | Available |
 | Deterministic standards checks | Available |
 | Policy-as-code preset packs | Preview |
 

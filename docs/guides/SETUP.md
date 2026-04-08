@@ -33,7 +33,8 @@ That preset scaffolds:
 2. CodeQL deep vulnerability analysis enabled
 3. AI practice review with per-file scanning enabled
 4. Pre-push hook policy defaults in `.sentinel-ci.yml`
-5. A stronger starter `.sentinel-ci.yml` than the previous minimal setup flow
+5. Diff-aware changed-files scanning enabled with full-scan fallback
+6. A stronger starter `.sentinel-ci.yml` than the previous minimal setup flow
 
 ### Preview Wizard Mode: Policy-Pack Templates
 
@@ -93,6 +94,8 @@ jobs:
           # Optional: block_on_findings: "true"
           # Optional: enable_codeql: "true"
           # Optional: codeql_languages: "python,javascript"
+          # Optional: enable_diff_aware: "true"
+          # Optional: enable_dependency_scan: "true"
 ```
 
 ### 2. Add the Configuration File
@@ -138,6 +141,57 @@ codeql:
 ```
 
 For deeper operational guidance, see [docs/features/vulnerability-scanner-improvements.md](../features/vulnerability-scanner-improvements.md).
+
+## 4. Optional: Enable Diff-Aware Scanning
+
+Diff-aware scanning analyzes changed files first and falls back to full scan if diff targets are unresolved.
+
+Workflow input:
+
+```yaml
+      - name: Run Sentinel CI
+        uses: abin-g/sentinel-ci-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_diff_aware: "true"
+```
+
+Config option:
+
+```yaml
+scan:
+  diff_aware:
+    enabled: true
+    fallback_full_scan: true
+```
+
+See [docs/features/diff-aware-scanning.md](../features/diff-aware-scanning.md).
+
+## 5. Optional: Enable Dependency Vulnerability Scanning
+
+Dependency scanning uses `pip-audit` to identify vulnerable packages in `requirements*.txt` files.
+
+Workflow input:
+
+```yaml
+      - name: Run Sentinel CI
+        uses: abin-g/sentinel-ci-action@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          enable_dependency_scan: "true"
+```
+
+Config option:
+
+```yaml
+dependency_scan:
+  enabled: true
+  default_severity: WARNING
+  block_on_severity:
+    - ERROR
+```
+
+See [docs/features/dependency-vulnerability-scanning.md](../features/dependency-vulnerability-scanning.md).
 
 ---
 

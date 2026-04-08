@@ -17,6 +17,8 @@ Use this page when Sentinel CI is installed but not behaving as expected.
 | No PR comment | Missing permissions or wrong trigger | Add `pull-requests: write` and use `pull_request` trigger |
 | AI output missing | Secrets not passed as env vars | Add at least one provider secret and map it in workflow `env` |
 | CodeQL not running | CodeQL disabled or languages not detected | Set `enable_codeql: "true"` and explicit `codeql_languages` |
+| Diff-aware not applied | Diff context unavailable or disabled | Enable `enable_diff_aware` and set fallback behavior in config |
+| Dependency scan not running | Disabled or no supported manifest | Enable `enable_dependency_scan` and ensure `requirements*.txt` exists |
 | CI blocking unexpectedly | Strict severity thresholds | Reduce `block_on_severity` temporarily to tune findings |
 | Config ignored | Wrong file path/name | Use `.sentinel-ci.yml` at repo root |
 
@@ -142,6 +144,27 @@ Check:
 2. Whether strict mode is intended for that repository
 3. Whether the repo should use a lighter profile temporarily
 
+## 11. Diff-aware scanning is not reducing scan scope
+
+Check:
+
+1. `enable_diff_aware: "true"` is set in workflow, or `scan.diff_aware.enabled: true` in config
+2. Workflow runs on pull request events
+3. Checkout uses `fetch-depth: 0`
+4. `scan.diff_aware.fallback_full_scan` is set as intended
+
+If fallback is true and changed files cannot be resolved, full scan is expected.
+
+## 12. Dependency vulnerability scanning is missing or empty
+
+Check:
+
+1. `enable_dependency_scan: "true"` is set in workflow, or `dependency_scan.enabled: true` in config
+2. Repository contains at least one `requirements*.txt` file
+3. `dependency_scan.block_on_severity` is configured as intended
+
+If dependency files are missing or unsupported, no dependency findings will be generated.
+
 ## Fast Debug Checklist
 
 1. Check workflow permissions
@@ -174,3 +197,5 @@ If the issue still persists:
 - Error reference: [ERROR_CODES.md](../reference/ERROR_CODES.md)
 - Rule engine guide: [RULE_ENGINE.md](../reference/RULE_ENGINE.md)
 - Advantages and value summary: [docs/features/advantages-of-sentinel-ci.md](../features/advantages-of-sentinel-ci.md)
+- Diff-aware feature details: [docs/features/diff-aware-scanning.md](../features/diff-aware-scanning.md)
+- Dependency scanning details: [docs/features/dependency-vulnerability-scanning.md](../features/dependency-vulnerability-scanning.md)
